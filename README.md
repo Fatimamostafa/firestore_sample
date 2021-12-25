@@ -1,4 +1,4 @@
-# glint_test
+# glints_test
 
 A new Flutter project.
 
