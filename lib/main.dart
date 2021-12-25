@@ -5,11 +5,16 @@ import 'package:glint_test/ui/signup/signup_page.dart';
 import 'package:glint_test/ui/splash/splash_page.dart';
 import 'package:glint_test/utils/navigation_service.dart';
 import 'package:get_it/get_it.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 GetIt locator = GetIt.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   await _setupLocator();
 
