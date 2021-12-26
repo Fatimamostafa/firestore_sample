@@ -62,7 +62,7 @@ class _SignupPageState extends State<SignupPage> {
                           keyboardType: TextInputType.name,
                           action: TextInputAction.next,
                           validator: (v) {
-                            if (v == null) {
+                            if (v == null || v.isEmpty) {
                               return 'Please insert your name';
                             } else {
                               return null;

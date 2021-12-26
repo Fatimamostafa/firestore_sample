@@ -57,7 +57,7 @@ class FeedPage extends StatelessWidget {
               return const TextX(text: 'Something went wrong');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const LoadingIndicator();
+              return const Center(child: LoadingIndicator());
             }
             return ListView(
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
