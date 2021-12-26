@@ -22,7 +22,7 @@ class NavigationService {
     }
   }
 
-  Future<dynamic> navigateToLogout(String routeName) {
+  Future<dynamic> navigateToRemoveUntil(String routeName) {
     return navigatorKey.currentState!
         .pushNamedAndRemoveUntil(routeName, (Route<dynamic> route) => false);
   }

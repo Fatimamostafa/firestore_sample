@@ -23,6 +23,7 @@ class FeedPage extends StatelessWidget {
     return Scaffold(
         backgroundColor: ColorsX.backgroundColor,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           elevation: 0,
           leading: null,

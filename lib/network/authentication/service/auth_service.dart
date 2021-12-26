@@ -59,11 +59,12 @@ class AuthService {
   ) async {
     try {
       loadingBloc.start(LoadingType.login);
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final user = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: pass,
       );
       loadingBloc.end(LoadingType.login);
+      return user.user;
     } on FirebaseAuthException catch (e) {
       loadingBloc.end(LoadingType.login);
       return e.message;
@@ -75,7 +76,7 @@ class AuthService {
     loadingBloc.start(LoadingType.logout);
     FirebaseAuth.instance.signOut().then((value) {
       loadingBloc.end(LoadingType.logout);
-      locator<NavigationService>().navigateToLogout(SignupPage.routeName);
+      locator<NavigationService>().navigateToRemoveUntil(SignupPage.routeName);
     }).catchError((e) {
       loadingBloc.end(LoadingType.logout);
     });

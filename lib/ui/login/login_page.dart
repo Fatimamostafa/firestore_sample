@@ -119,8 +119,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     if (session is User) {
-      locator<NavigationService>()
-          .navigateTo(FeedPage.routeName, replace: true);
+      locator<NavigationService>().navigateToRemoveUntil(FeedPage.routeName);
     } else if (session is String) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(session)));
