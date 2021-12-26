@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:glint_test/network/authentication/auth_bloc.dart';
+import 'package:glint_test/network/authentication/service/auth_service.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
 import 'package:glint_test/ui/feed/feed_page.dart';
 import 'package:glint_test/utils/extension.dart';
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
     }
     _formKey.currentState!.save();
 
-    final session = await authBloc.login(
+    final session = await authService.login(
       _emailTextController.value.text,
       _passwordTextController.value.text,
     );

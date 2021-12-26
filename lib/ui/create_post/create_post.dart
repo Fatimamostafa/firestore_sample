@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:glint_test/network/post/bloc/create_post_bloc.dart';
+import 'package:glint_test/network/post/service/create_post_service.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
 import 'package:glint_test/ui/create_post/post_input_field.dart';
-import 'package:glint_test/utils/firebase.dart';
 import 'package:glint_test/utils/spacing.dart';
 import 'package:glint_test/values/colors.dart';
 import 'package:glint_test/widgets/loader_button.dart';
@@ -21,16 +20,12 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
-    currentUserId() {
-      return firebaseAuth.currentUser!.uid;
-    }
-
     return WillPopScope(
       onWillPop: () async {
         return true;
       },
       child: Scaffold(
-        backgroundColor: ColorsX.backgroundColor,
+        backgroundColor: ColorsX.white,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
@@ -61,7 +56,7 @@ class _CreatePostState extends State<CreatePost> {
             PostInputField(
               onSubmitted: () {},
               hintText: 'Start typing..',
-              length: 150,
+              length: 280,
               controller: _postController,
               line: 5,
             ),
@@ -74,12 +69,35 @@ class _CreatePostState extends State<CreatePost> {
                       isLoading: isLoading.hasData &&
                           isLoading.data!.contains(LoadingType.createPost),
                       onPressed: () {
-                        createPostBloc.uploadPost(_postController.value.text);
+                        _createPost();
                       });
                 }),
           ],
         ),
       ),
     );
+  }
+
+  void _createPost() async {
+    final isPosted =
+        await createPostService.uploadPost(_postController.value.text);
+    if (isPosted) {
+      showSnackBar('Post submitted');
+      Navigator.pop(context);
+    } else {
+      showSnackBar('Failed!', ColorsX.error);
+    }
+  }
+
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
+      String message,
+      [Color? color]) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    scaffoldMessenger.removeCurrentSnackBar();
+    return scaffoldMessenger.showSnackBar(SnackBar(
+      content: Text(message),
+      backgroundColor: color ?? ColorsX.primaryPurple,
+    ));
   }
 }

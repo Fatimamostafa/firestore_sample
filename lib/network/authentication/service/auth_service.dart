@@ -1,17 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
 import 'package:glint_test/ui/signup/signup_page.dart';
 import 'package:glint_test/utils/firebase.dart';
 import 'package:glint_test/utils/locator.dart';
 import 'package:glint_test/utils/navigation_service.dart';
-import 'package:rxdart/subjects.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthBloc {
-  final BehaviorSubject<User?> _subjectUser = BehaviorSubject<User?>();
-
-  BehaviorSubject<User?> get subjectUser => _subjectUser;
-
+class AuthService {
   Future<dynamic> register(String email, String pass, String name) async {
     loadingBloc.start(LoadingType.signup);
 
@@ -33,7 +28,6 @@ class AuthBloc {
         );
 
         loadingBloc.end(LoadingType.signup);
-        _subjectUser.sink.add(user);
 
         return user;
       }
@@ -73,15 +67,10 @@ class AuthBloc {
       if (user != null) {
         getProfile();
       }
-      _subjectUser.sink.add(user);
     } on FirebaseAuthException catch (e) {
       loadingBloc.end(LoadingType.login);
       return e.message;
     }
-  }
-
-  dispose() {
-    _subjectUser.close();
   }
 
   getProfile() {
@@ -101,7 +90,6 @@ class AuthBloc {
     FirebaseAuth.instance.signOut().then((value) {
       loadingBloc.end(LoadingType.logout);
       locator<NavigationService>().navigateToLogout(SignupPage.routeName);
-      _subjectUser.sink.add(null);
     }).catchError((e) {
       loadingBloc.end(LoadingType.logout);
     });
@@ -112,4 +100,4 @@ class AuthBloc {
   }
 }
 
-final authBloc = AuthBloc();
+final authService = AuthService();
