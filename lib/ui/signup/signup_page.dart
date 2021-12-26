@@ -26,6 +26,7 @@ class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
   final _passwordTextController = TextEditingController(text: '');
   final _emailTextController = TextEditingController(text: '');
+  final _nameTextController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +54,22 @@ class _SignupPageState extends State<SignupPage> {
                     key: _formKey,
                     child: Column(
                       children: [
+                        TextInputForm(
+                          controller: _nameTextController,
+                          errorText: true,
+                          title: 'Name',
+                          hintText: 'Enter your full name',
+                          keyboardType: TextInputType.name,
+                          action: TextInputAction.next,
+                          validator: (v) {
+                            if (v == null) {
+                              return 'Please insert your name';
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        const Spacing(size: 2),
                         TextInputForm(
                           controller: _emailTextController,
                           errorText: true,
@@ -137,6 +154,7 @@ class _SignupPageState extends State<SignupPage> {
     final session = await authBloc.register(
       _emailTextController.value.text,
       _passwordTextController.value.text,
+      _nameTextController.value.text
     );
 
     if (session is User) {

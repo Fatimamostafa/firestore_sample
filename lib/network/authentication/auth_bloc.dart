@@ -11,7 +11,7 @@ class AuthBloc {
 
   BehaviorSubject<User?> get subjectUser => _subjectUser;
 
-  Future<dynamic> register(String email, String pass) async {
+  Future<dynamic> register(String email, String pass, String name) async {
     loadingBloc.start(LoadingType.signup);
 
     try {
@@ -24,6 +24,7 @@ class AuthBloc {
 
       if (userCredential.user?.uid == currentUser?.uid) {
         User? user = userCredential.user;
+        user!.updateDisplayName(name);
         loadingBloc.end(LoadingType.signup);
         _subjectUser.sink.add(user);
 
@@ -35,29 +36,28 @@ class AuthBloc {
     }
   }
 
-  login(
+  Future<dynamic> login(
     String email,
     String pass,
-  ) {
-    loadingBloc.start(LoadingType.login);
-    FirebaseAuth.instance
-        .signInWithEmailAndPassword(
-      email: email,
-      password: pass,
-    )
-        .then((userCredential) {
+  ) async {
+    try {
+      loadingBloc.start(LoadingType.login);
+      final userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: pass,
+      );
       loadingBloc.end(LoadingType.login);
       User? user = userCredential.user;
+      print('USER log:: ${user!.displayName}');
       if (user != null) {
         getProfile();
       }
       _subjectUser.sink.add(user);
-    }).catchError((e) {
-      if (kDebugMode) {
-        print('LOGIN RESULT #${e.code} // ${e.message}');
-      }
+    } on FirebaseAuthException catch (e) {
       loadingBloc.end(LoadingType.login);
-    });
+      return e.message;
+    }
   }
 
   dispose() {
@@ -76,7 +76,7 @@ class AuthBloc {
     } else {}
   }
 
-  void logout() {
+  logout() {
     loadingBloc.start(LoadingType.logout);
     FirebaseAuth.instance.signOut().then((value) {
       loadingBloc.end(LoadingType.logout);
@@ -84,9 +84,6 @@ class AuthBloc {
       _subjectUser.sink.add(null);
     }).catchError((e) {
       loadingBloc.end(LoadingType.logout);
-      if (kDebugMode) {
-        print('Failed sign out: $e');
-      }
     });
   }
 
