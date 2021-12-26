@@ -10,6 +10,7 @@ enum LoadingType {
   updatePost
 }
 
+/// A class that shows/hides loading indicators on Firestore requests/response
 class LoadingBloc {
   final BehaviorSubject<List<LoadingType>> _subjectIsLoading =
       BehaviorSubject<List<LoadingType>>();

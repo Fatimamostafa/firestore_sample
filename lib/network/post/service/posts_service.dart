@@ -29,6 +29,7 @@ class PostsService {
     }
   }
 
+  /// Deletes a [postRef] from feed by [id]
   deletePost(String id) async {
     loadingBloc.start(LoadingType.deletePost);
 
@@ -41,6 +42,7 @@ class PostsService {
     }
   }
 
+  /// Updates a [postRef] in feed by [id]
   Future<bool> updatePost(String id, String text) async {
     loadingBloc.start(LoadingType.updatePost);
 

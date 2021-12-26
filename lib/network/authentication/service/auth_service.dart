@@ -7,6 +7,7 @@ import 'package:glint_test/utils/locator.dart';
 import 'package:glint_test/utils/navigation_service.dart';
 
 class AuthService {
+  /// Registers a new user in Firestore database
   Future<dynamic> register(String email, String pass, String name) async {
     loadingBloc.start(LoadingType.signup);
 
@@ -51,6 +52,7 @@ class AuthService {
     });
   }
 
+  /// Login function of a user with valid [email] and [pass]
   Future<dynamic> login(
     String email,
     String pass,
@@ -68,6 +70,7 @@ class AuthService {
     }
   }
 
+  /// Logout from app feed page and navigate to [SignupPage]
   logout() {
     loadingBloc.start(LoadingType.logout);
     FirebaseAuth.instance.signOut().then((value) {
