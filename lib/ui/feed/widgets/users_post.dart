@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:glint_test/network/post/moodel/post.dart';
 import 'package:glint_test/network/authentication/model/user.dart';
+import 'package:glint_test/network/post/moodel/post.dart';
+import 'package:glint_test/network/post/service/posts_service.dart';
+import 'package:glint_test/network/utils/loading_bloc.dart';
 import 'package:glint_test/utils/firebase.dart';
 import 'package:glint_test/utils/spacing.dart';
 import 'package:glint_test/values/colors.dart';
 import 'package:glint_test/widgets/card.dart';
+import 'package:glint_test/widgets/loader_button.dart';
 import 'package:glint_test/widgets/text.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -91,7 +94,7 @@ class UserPost extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () => _showMyDialog(context),
                             icon: const Icon(Icons.delete_forever),
                           ),
                           IconButton(
@@ -109,5 +112,43 @@ class UserPost extends StatelessWidget {
         }
       },
     );
+  }
+
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const TextX(text: 'Delete Post', color: ColorsX.primaryPurple),
+          content:
+              const TextX(text: 'Are you sure you want to delete the post?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            StreamBuilder<List<LoadingType>>(
+                stream: loadingBloc.subjectIsLoading,
+                builder: (context, isLoading) {
+                  return LoaderButton(
+                      width: applySpacing(18),
+                      height: applySpacing(4),
+                      label: 'Delete',
+                      isLoading: isLoading.hasData &&
+                          isLoading.data!.contains(LoadingType.deletePost),
+                      onPressed: () => _delete(context));
+                }),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _delete(BuildContext context) async {
+    await postsService.deletePost(post.id!);
+    Navigator.of(context).pop();
   }
 }

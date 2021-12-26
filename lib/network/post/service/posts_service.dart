@@ -3,7 +3,7 @@ import 'package:glint_test/network/authentication/model/user.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
 import 'package:glint_test/utils/firebase.dart';
 
-class CreatePostService {
+class PostsService {
   /// Uploads post to the post collection in Firestore
   Future<bool> uploadPost(String description) async {
     loadingBloc.start(LoadingType.createPost);
@@ -28,6 +28,18 @@ class CreatePostService {
       return false;
     }
   }
+
+  deletePost(String id) async {
+    loadingBloc.start(LoadingType.deletePost);
+
+    try {
+      await postRef.doc(id).delete();
+
+      loadingBloc.end(LoadingType.deletePost);
+    } catch (e) {
+      loadingBloc.end(LoadingType.deletePost);
+    }
+  }
 }
 
-final createPostService = CreatePostService();
+final postsService = PostsService();

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:glint_test/network/post/service/create_post_service.dart';
+import 'package:glint_test/network/post/service/posts_service.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
 import 'package:glint_test/ui/create_post/post_input_field.dart';
 import 'package:glint_test/utils/spacing.dart';
@@ -80,7 +80,7 @@ class _CreatePostState extends State<CreatePost> {
 
   void _createPost() async {
     final isPosted =
-        await createPostService.uploadPost(_postController.value.text);
+        await postsService.uploadPost(_postController.value.text);
     if (isPosted) {
       showSnackBar('Post submitted');
       Navigator.pop(context);
