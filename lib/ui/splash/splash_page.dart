@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:glint_test/ui/feed/feed_page.dart';
@@ -16,6 +18,8 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  StreamSubscription? _streamLogin;
+
   @override
   void initState() {
     _startTimer();
@@ -29,7 +33,8 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void _checkUserStatus() async {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    _streamLogin =
+        FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         locator<NavigationService>().navigateTo(
           SignupPage.routeName,
@@ -42,6 +47,12 @@ class _SplashPageState extends State<SplashPage> {
         );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _streamLogin!.cancel();
+    super.dispose();
   }
 
   @override

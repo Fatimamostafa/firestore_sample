@@ -25,6 +25,7 @@ class FeedPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
+          leading: null,
           actions: <Widget>[
             IconButton(
                 color: ColorsX.primaryPurple,
