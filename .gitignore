@@ -1,7 +1,5 @@
 # Not supported platforms
-ios
 web
-android
 
 # Miscellaneous
 *.class
