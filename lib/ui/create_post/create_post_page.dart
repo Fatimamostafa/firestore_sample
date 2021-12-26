@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:glint_test/network/post/moodel/post.dart';
 import 'package:glint_test/network/post/service/posts_service.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
-import 'package:glint_test/ui/create_post/post_input_field.dart';
+import 'package:glint_test/ui/create_post/widgets/post_input_field.dart';
 import 'package:glint_test/utils/spacing.dart';
 import 'package:glint_test/values/colors.dart';
 import 'package:glint_test/widgets/loader_button.dart';
 import 'package:glint_test/widgets/text.dart';
 
-class CreatePost extends StatefulWidget {
+class CreatePostPage extends StatefulWidget {
   final PostModel? post;
 
-  const CreatePost({Key? key, this.post}) : super(key: key);
+  const CreatePostPage({Key? key, this.post}) : super(key: key);
 
   @override
-  _CreatePostState createState() => _CreatePostState();
+  _CreatePostPageState createState() => _CreatePostPageState();
 }
 
-class _CreatePostState extends State<CreatePost> {
+class _CreatePostPageState extends State<CreatePostPage> {
   late final _postController = TextEditingController(
       text: widget.post != null ? widget.post!.description : '');
 

@@ -5,6 +5,7 @@ import 'package:glint_test/network/post/moodel/post.dart';
 import 'package:glint_test/ui/feed/widgets/fab_container.dart';
 import 'package:glint_test/ui/feed/widgets/users_post.dart';
 import 'package:glint_test/utils/firebase.dart';
+import 'package:glint_test/utils/spacing.dart';
 import 'package:glint_test/values/colors.dart';
 import 'package:glint_test/widgets/loading_indicator.dart';
 import 'package:glint_test/widgets/text.dart';
@@ -41,8 +42,8 @@ class FeedPage extends StatelessWidget {
         ),
         floatingActionButton: Container(
           color: Colors.transparent,
-          height: 45.0,
-          width: 45.0,
+          height: applySpacing(6),
+          width: applySpacing(6),
           child: const FabContainer(
             icon: Icons.add,
             mini: true,
@@ -53,15 +54,14 @@ class FeedPage extends StatelessWidget {
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
-              return const Text('Something went wrong');
+              return const TextX(text: 'Something went wrong');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const LoadingIndicator();
             }
             return ListView(
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                Map<String, dynamic> data =
-                    document.data()! as Map<String, dynamic>;
+                final data = document.data()! as Map<String, dynamic>;
                 PostModel posts = PostModel.fromJson(data);
 
                 return Padding(

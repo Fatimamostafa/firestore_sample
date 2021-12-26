@@ -1,7 +1,7 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:animations/animations.dart';
-import 'package:glint_test/ui/create_post/create_post.dart';
+import 'package:glint_test/ui/create_post/create_post_page.dart';
 
 class FabContainer extends StatelessWidget {
   final Widget? page;
@@ -36,7 +36,7 @@ class FabContainer extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).push(
               CupertinoPageRoute(
-                builder: (_) => const CreatePost(),
+                builder: (_) => const CreatePostPage(),
               ),
             );
           },

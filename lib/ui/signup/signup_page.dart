@@ -151,11 +151,8 @@ class _SignupPageState extends State<SignupPage> {
     }
     _formKey.currentState!.save();
 
-    final session = await authService.register(
-      _emailTextController.value.text,
-      _passwordTextController.value.text,
-      _nameTextController.value.text
-    );
+    final session = await authService.register(_emailTextController.value.text,
+        _passwordTextController.value.text, _nameTextController.value.text);
 
     if (session is User) {
       locator<NavigationService>()

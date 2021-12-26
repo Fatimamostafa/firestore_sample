@@ -5,7 +5,7 @@ import 'package:glint_test/network/authentication/model/user.dart';
 import 'package:glint_test/network/post/moodel/post.dart';
 import 'package:glint_test/network/post/service/posts_service.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
-import 'package:glint_test/ui/create_post/create_post.dart';
+import 'package:glint_test/ui/create_post/create_post_page.dart';
 import 'package:glint_test/utils/firebase.dart';
 import 'package:glint_test/utils/spacing.dart';
 import 'package:glint_test/values/colors.dart';
@@ -105,7 +105,7 @@ class UserPost extends StatelessWidget {
                             onPressed: () {
                               Navigator.of(context).push(
                                 CupertinoPageRoute(
-                                  builder: (_) => CreatePost(post: post),
+                                  builder: (_) => CreatePostPage(post: post),
                                 ),
                               );
                             },
@@ -121,7 +121,7 @@ class UserPost extends StatelessWidget {
             ),
           );
         } else {
-          return Container();
+          return const SizedBox.shrink();
         }
       },
     );
@@ -138,7 +138,7 @@ class UserPost extends StatelessWidget {
               const TextX(text: 'Are you sure you want to delete the post?'),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: const TextX(text: 'Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
