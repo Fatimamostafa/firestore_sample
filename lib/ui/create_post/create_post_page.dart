@@ -73,16 +73,20 @@ class _CreatePostPageState extends State<CreatePostPage> {
                       isLoading: isLoading.hasData &&
                           isLoading.data!.contains(LoadingType.createPost),
                       onPressed: () {
+                        if(_postController.value.text.toString().isEmpty) {
+                          return;
+                        }
                         widget.post != null ? _updatePost() : _createPost();
                       });
                 }),
           ],
         ),
       ),
-    );
+    );;
   }
 
   void _createPost() async {
+
     final isPosted = await postsService.uploadPost(_postController.value.text);
     if (isPosted) {
       showSnackBar('Post submitted');
