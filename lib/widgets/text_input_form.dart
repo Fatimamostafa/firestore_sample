@@ -85,10 +85,9 @@ class _TextInputFormState extends State<TextInputForm> {
               stream: bloc.subjectFocus,
               builder: (context, snapshotFocus) {
                 return Container(
-                  height: widget.maxLine == 1 ? applySpacing(6) : null,
-                  //alignment: Alignment.center,
-                  padding: EdgeInsets.only(
-                      left: applySpacing(1.5), right: applySpacing(1.5)),
+                  height: widget.maxLine == 1 ? applySpacing(8) : null,
+                  padding: EdgeInsets.symmetric(
+                      vertical: applySpacing(1), horizontal: applySpacing(1.5)),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(11.0),
                     color: Colors.transparent,

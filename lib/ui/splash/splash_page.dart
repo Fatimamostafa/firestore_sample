@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:glint_test/main.dart';
+import 'package:glint_test/ui/feed/feed_page.dart';
 import 'package:glint_test/ui/login/login_page.dart';
 import 'package:glint_test/ui/signup/signup_page.dart';
 import 'package:glint_test/utils/locator.dart';
@@ -39,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
         );
       } else {
         locator<NavigationService>().navigateTo(
-          LoginPage.routeName,
+          FeedPage.routeName,
           replace: true,
         );
       }

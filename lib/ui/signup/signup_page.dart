@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:glint_test/network/authentication/auth_bloc.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
@@ -71,14 +72,15 @@ class _SignupPageState extends State<SignupPage> {
                         TextInputForm(
                           controller: _passwordTextController,
                           title: 'Password',
+                          errorText: true,
                           hintText: 'Enter password',
                           keyboardType: TextInputType.visiblePassword,
                           action: TextInputAction.done,
                           validator: (v) {
-                            if (v!.length >= 6) {
-                              return null;
+                            if (v!.length < 6) {
+                              return 'Password must be at least 6 characters';
                             } else {
-                              return 'Enter password';
+                              return null;
                             }
                           },
                         ),
@@ -137,9 +139,12 @@ class _SignupPageState extends State<SignupPage> {
       _passwordTextController.value.text,
     );
 
-    if (session != null) {
+    if (session is User) {
       locator<NavigationService>()
           .navigateTo(FeedPage.routeName, replace: true);
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(session)));
     }
   }
 }

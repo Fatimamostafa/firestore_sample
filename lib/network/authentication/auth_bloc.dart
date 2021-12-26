@@ -11,15 +11,15 @@ class AuthBloc {
 
   BehaviorSubject<User?> get subjectUser => _subjectUser;
 
-  Future<User?> register(String email, String pass) async {
+  Future<dynamic> register(String email, String pass) async {
     loadingBloc.start(LoadingType.signup);
 
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-      email: email,
-      password: pass,
-    )
-        .then((userCredential) {
+    try {
+      final userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: pass,
+      );
       final User? currentUser = FirebaseAuth.instance.currentUser;
 
       if (userCredential.user?.uid == currentUser?.uid) {
@@ -28,12 +28,11 @@ class AuthBloc {
         _subjectUser.sink.add(user);
 
         return user;
-      } else {
-        loadingBloc.end(LoadingType.signup);
       }
-    }).catchError((e) {
+    } on FirebaseAuthException catch (e) {
       loadingBloc.end(LoadingType.signup);
-    });
+      return e.message;
+    }
   }
 
   login(
@@ -78,10 +77,13 @@ class AuthBloc {
   }
 
   void logout() {
+    loadingBloc.start(LoadingType.logout);
     FirebaseAuth.instance.signOut().then((value) {
+      loadingBloc.end(LoadingType.logout);
       locator<NavigationService>().navigateToLogout(SignupPage.routeName);
       _subjectUser.sink.add(null);
     }).catchError((e) {
+      loadingBloc.end(LoadingType.logout);
       if (kDebugMode) {
         print('Failed sign out: $e');
       }

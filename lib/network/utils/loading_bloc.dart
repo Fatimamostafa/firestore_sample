@@ -4,11 +4,13 @@ import 'package:rxdart/subjects.dart';
 enum LoadingType {
   login,
   signup,
+  logout,
 }
 
 enum BottomSheetType {
   signUp,
   login,
+  logout,
 }
 
 class LoadingBloc {
