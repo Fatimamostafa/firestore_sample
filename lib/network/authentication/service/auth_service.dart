@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:glint_test/network/utils/loading_bloc.dart';
+import 'package:glint_test/network/loader/loading_bloc.dart';
 import 'package:glint_test/ui/signup/signup_page.dart';
 import 'package:glint_test/utils/firebase.dart';
 import 'package:glint_test/utils/locator.dart';
@@ -37,7 +37,7 @@ class AuthService {
     }
   }
 
-  /// This will save the details inputted by the user to firestore.
+  /// This will save the details inputted by the user to Firestore.
   saveUserToFirestore({
     required String name,
     required User user,
@@ -57,32 +57,15 @@ class AuthService {
   ) async {
     try {
       loadingBloc.start(LoadingType.login);
-      final userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: pass,
       );
       loadingBloc.end(LoadingType.login);
-      User? user = userCredential.user;
-      if (user != null) {
-        getProfile();
-      }
     } on FirebaseAuthException catch (e) {
       loadingBloc.end(LoadingType.login);
       return e.message;
     }
-  }
-
-  getProfile() {
-    String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
-    if (uid.isEmpty) return;
-  }
-
-  isLoggedIn() {
-    User? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-    } else {}
   }
 
   logout() {
@@ -93,10 +76,6 @@ class AuthService {
     }).catchError((e) {
       loadingBloc.end(LoadingType.logout);
     });
-  }
-
-  User? getMe() {
-    return FirebaseAuth.instance.currentUser;
   }
 }
 

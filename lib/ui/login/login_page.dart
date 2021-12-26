@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:glint_test/network/authentication/service/auth_service.dart';
-import 'package:glint_test/network/utils/loading_bloc.dart';
+import 'package:glint_test/network/loader/loading_bloc.dart';
 import 'package:glint_test/ui/feed/feed_page.dart';
 import 'package:glint_test/utils/extension.dart';
 import 'package:glint_test/utils/locator.dart';

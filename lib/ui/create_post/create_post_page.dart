@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:glint_test/network/post/moodel/post.dart';
 import 'package:glint_test/network/post/service/posts_service.dart';
-import 'package:glint_test/network/utils/loading_bloc.dart';
+import 'package:glint_test/network/loader/loading_bloc.dart';
 import 'package:glint_test/ui/create_post/widgets/post_input_field.dart';
 import 'package:glint_test/utils/spacing.dart';
 import 'package:glint_test/values/colors.dart';

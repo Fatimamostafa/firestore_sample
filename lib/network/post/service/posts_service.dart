@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:glint_test/network/authentication/model/user.dart';
-import 'package:glint_test/network/utils/loading_bloc.dart';
+import 'package:glint_test/network/loader/loading_bloc.dart';
 import 'package:glint_test/utils/firebase.dart';
 
 class PostsService {

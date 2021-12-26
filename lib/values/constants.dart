@@ -16,15 +16,4 @@ class Values {
   static bool isStaging() => true;
 }
 
-class Constant {
-  static String user = 'user';
-  static String token = 'token';
 
-  static const String dateTimeFormat = 'dd-MM-yyyy HH:mm:ss';
-  static const String dateFormat = "dd-MM-yyyy";
-  static const String timeFormat = "HH:mm:ss";
-}
-
-class FireStore {
-  static String users = 'users';
-}
