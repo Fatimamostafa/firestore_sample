@@ -6,6 +6,7 @@ import 'package:glint_test/ui/feed/feed_page.dart';
 import 'package:glint_test/utils/extension.dart';
 import 'package:glint_test/utils/locator.dart';
 import 'package:glint_test/utils/navigation_service.dart';
+import 'package:glint_test/values/colors.dart';
 import 'package:glint_test/widgets/loader_button.dart';
 import 'package:glint_test/widgets/text_input_form.dart';
 
@@ -29,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsX.backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,

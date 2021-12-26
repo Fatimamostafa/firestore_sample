@@ -1,6 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
 import 'package:glint_test/ui/signup/signup_page.dart';
+import 'package:glint_test/utils/firebase.dart';
 import 'package:glint_test/utils/locator.dart';
 import 'package:glint_test/utils/navigation_service.dart';
 import 'package:rxdart/subjects.dart';
@@ -24,7 +25,13 @@ class AuthBloc {
 
       if (userCredential.user?.uid == currentUser?.uid) {
         User? user = userCredential.user;
-        user!.updateDisplayName(name);
+
+        await saveUserToFirestore(
+          name: name,
+          user: user!,
+          email: email,
+        );
+
         loadingBloc.end(LoadingType.signup);
         _subjectUser.sink.add(user);
 
@@ -34,6 +41,20 @@ class AuthBloc {
       loadingBloc.end(LoadingType.signup);
       return e.message;
     }
+  }
+
+  /// This will save the details inputted by the user to firestore.
+  saveUserToFirestore({
+    required String name,
+    required User user,
+    required String email,
+  }) async {
+    await usersRef.doc(user.uid).set({
+      'username': name,
+      'email': email,
+      'time': Timestamp.now(),
+      'id': user.uid,
+    });
   }
 
   Future<dynamic> login(
@@ -49,7 +70,6 @@ class AuthBloc {
       );
       loadingBloc.end(LoadingType.login);
       User? user = userCredential.user;
-      print('USER log:: ${user!.displayName}');
       if (user != null) {
         getProfile();
       }

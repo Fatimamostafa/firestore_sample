@@ -5,12 +5,7 @@ enum LoadingType {
   login,
   signup,
   logout,
-}
-
-enum BottomSheetType {
-  signUp,
-  login,
-  logout,
+  createPost,
 }
 
 class LoadingBloc {
