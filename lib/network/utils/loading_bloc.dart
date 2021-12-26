@@ -6,7 +6,8 @@ enum LoadingType {
   signup,
   logout,
   createPost,
-  deletePost
+  deletePost,
+  updatePost
 }
 
 class LoadingBloc {

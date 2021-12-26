@@ -40,6 +40,23 @@ class PostsService {
       loadingBloc.end(LoadingType.deletePost);
     }
   }
+
+  Future<bool> updatePost(String id, String text) async {
+    loadingBloc.start(LoadingType.updatePost);
+
+    try {
+      postRef.doc(id).update({
+        'description': text,
+        'timestamp': Timestamp.now(),
+      });
+
+      loadingBloc.end(LoadingType.updatePost);
+      return true;
+    } catch (e) {
+      loadingBloc.end(LoadingType.updatePost);
+      return false;
+    }
+  }
 }
 
 final postsService = PostsService();

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:glint_test/network/post/moodel/post.dart';
 import 'package:glint_test/network/post/service/posts_service.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
 import 'package:glint_test/ui/create_post/post_input_field.dart';
@@ -9,14 +10,17 @@ import 'package:glint_test/widgets/loader_button.dart';
 import 'package:glint_test/widgets/text.dart';
 
 class CreatePost extends StatefulWidget {
-  const CreatePost({Key? key}) : super(key: key);
+  final PostModel? post;
+
+  const CreatePost({Key? key, this.post}) : super(key: key);
 
   @override
   _CreatePostState createState() => _CreatePostState();
 }
 
 class _CreatePostState extends State<CreatePost> {
-  final _postController = TextEditingController(text: '');
+  late final _postController = TextEditingController(
+      text: widget.post != null ? widget.post!.description : '');
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +40,8 @@ class _CreatePostState extends State<CreatePost> {
               Navigator.pop(context);
             },
           ),
-          title: const TextX(
-              text: 'Create Post',
+          title: TextX(
+              text: widget.post != null ? 'Update post' : 'Create Post',
               textAlign: TextAlign.center,
               color: Colors.black,
               fontWeight: FontWeight.w700,
@@ -65,11 +69,11 @@ class _CreatePostState extends State<CreatePost> {
                 stream: loadingBloc.subjectIsLoading,
                 builder: (context, isLoading) {
                   return LoaderButton(
-                      label: 'Post',
+                      label: widget.post != null ? 'Update' : 'Post',
                       isLoading: isLoading.hasData &&
                           isLoading.data!.contains(LoadingType.createPost),
                       onPressed: () {
-                        _createPost();
+                        widget.post != null ? _updatePost() : _createPost();
                       });
                 }),
           ],
@@ -79,10 +83,20 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   void _createPost() async {
-    final isPosted =
-        await postsService.uploadPost(_postController.value.text);
+    final isPosted = await postsService.uploadPost(_postController.value.text);
     if (isPosted) {
       showSnackBar('Post submitted');
+      Navigator.pop(context);
+    } else {
+      showSnackBar('Failed!', ColorsX.error);
+    }
+  }
+
+  void _updatePost() async {
+    final isUpdate = await postsService.updatePost(
+        widget.post!.id!, _postController.value.text);
+    if (isUpdate) {
+      showSnackBar('Post updated');
       Navigator.pop(context);
     } else {
       showSnackBar('Failed!', ColorsX.error);

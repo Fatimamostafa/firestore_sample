@@ -5,6 +5,7 @@ import 'package:glint_test/network/authentication/model/user.dart';
 import 'package:glint_test/network/post/moodel/post.dart';
 import 'package:glint_test/network/post/service/posts_service.dart';
 import 'package:glint_test/network/utils/loading_bloc.dart';
+import 'package:glint_test/ui/create_post/create_post.dart';
 import 'package:glint_test/utils/firebase.dart';
 import 'package:glint_test/utils/spacing.dart';
 import 'package:glint_test/values/colors.dart';
@@ -95,11 +96,23 @@ class UserPost extends StatelessWidget {
                         children: [
                           IconButton(
                             onPressed: () => _showMyDialog(context),
-                            icon: const Icon(Icons.delete_forever),
+                            icon: const Icon(
+                              Icons.delete_forever,
+                              color: ColorsX.darkBlueGrey,
+                            ),
                           ),
                           IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.edit),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (_) => CreatePost(post: post),
+                                ),
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.edit,
+                              color: ColorsX.darkBlueGrey,
+                            ),
                           ),
                         ],
                       ))
