@@ -4,10 +4,6 @@ class PreferenceKey {
 
 class Texts {}
 
-class InputKeys {
-  static String id = 'id';
-}
-
 class Values {
   static double buttonRadius() => 11;
 

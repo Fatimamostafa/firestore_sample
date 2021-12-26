@@ -1,13 +1,14 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:glint_test/main.dart';
+import 'package:glint_test/ui/login/login_page.dart';
 import 'package:glint_test/ui/signup/signup_page.dart';
+import 'package:glint_test/utils/locator.dart';
 import 'package:glint_test/utils/navigation_service.dart';
 import 'package:glint_test/utils/spacing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-const _kUserSession = 'usersSession';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -25,20 +26,25 @@ class _SplashPageState extends State<SplashPage> {
 
   _startTimer() {
     Future.delayed(const Duration(milliseconds: 2000)).then((_) {
-      //_checkUserStatus();
-      Navigator.pushNamed(context, SignupPage.routeName);
+      _checkUserStatus();
     });
   }
 
-  // void _checkUserStatus() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //
-  //   final userSession =
-  //       prefs.getString(_kUserSession) ?? '';
-  //
-  //   final json = jsonDecode(userSession) as Map<String, dynamic>;
-  //
-  // }
+  void _checkUserStatus() async {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        locator<NavigationService>().navigateTo(
+          SignupPage.routeName,
+          replace: true,
+        );
+      } else {
+        locator<NavigationService>().navigateTo(
+          LoginPage.routeName,
+          replace: true,
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +56,23 @@ class _SplashPageState extends State<SplashPage> {
             const Center(
               child: Text(
                 'Glints Test',
-                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: applySpacing(15)),
+              margin: EdgeInsets.only(
+                bottom: applySpacing(15),
+              ),
               alignment: Alignment.bottomCenter,
               width: applySpacing(8),
               height: applySpacing(0.5),
               child: const ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: LinearProgressIndicator(
-                  backgroundColor: Colors.deepPurple,
+                  backgroundColor: Colors.grey,
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
                 ),
               ),

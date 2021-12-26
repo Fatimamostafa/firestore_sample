@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:glint_test/ui/feed/feed_page.dart';
 import 'package:glint_test/ui/login/login_page.dart';
 import 'package:glint_test/ui/signup/signup_page.dart';
 import 'package:glint_test/ui/splash/splash_page.dart';
+import 'package:glint_test/utils/locator.dart';
 import 'package:glint_test/utils/navigation_service.dart';
-import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
-GetIt locator = GetIt.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +15,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  await _setupLocator();
+  await setupLocator();
 
   await _portrait();
 
@@ -41,6 +40,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         LoginPage.routeName: (ctx) => const LoginPage(),
         SignupPage.routeName: (ctx) => const SignupPage(),
+        FeedPage.routeName: (ctx) => const FeedPage(),
       },
       home: const SplashPage(),
     );
@@ -50,9 +50,4 @@ class MyApp extends StatelessWidget {
 /// Locks app in portrait orientation
 Future<void> _portrait() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-}
-
-/// Setup singleton for navigation router service
-Future<void> _setupLocator() async {
-  locator.registerLazySingleton(() => NavigationService());
 }

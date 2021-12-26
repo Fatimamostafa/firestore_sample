@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:glint_test/main.dart';
-import 'package:glint_test/network/blocs/loading.dart';
+import 'package:glint_test/network/authentication/auth_bloc.dart';
+import 'package:glint_test/network/utils/loading_bloc.dart';
+import 'package:glint_test/ui/feed/feed_page.dart';
 import 'package:glint_test/ui/login/login_page.dart';
 import 'package:glint_test/utils/extension.dart';
+import 'package:glint_test/utils/locator.dart';
 import 'package:glint_test/utils/navigation_service.dart';
 import 'package:glint_test/utils/spacing.dart';
 import 'package:glint_test/values/colors.dart';
@@ -10,21 +12,28 @@ import 'package:glint_test/widgets/loader_button.dart';
 import 'package:glint_test/widgets/text.dart';
 import 'package:glint_test/widgets/text_input_form.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   static const routeName = '/signup';
 
   const SignupPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final _form = GlobalKey<FormState>();
+  State<SignupPage> createState() => _SignupPageState();
+}
 
+class _SignupPageState extends State<SignupPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _passwordTextController = TextEditingController(text: '');
+  final _emailTextController = TextEditingController(text: '');
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title:  const TextX(
+        title: const TextX(
             text: 'Sign Up',
             textAlign: TextAlign.center,
             color: Colors.black,
@@ -40,16 +49,16 @@ class SignupPage extends StatelessWidget {
               children: [
                 const Spacing(size: 3),
                 Form(
-                    key: _form,
+                    key: _formKey,
                     child: Column(
                       children: [
                         TextInputForm(
+                          controller: _emailTextController,
                           errorText: true,
                           title: 'Email Address',
                           hintText: 'Enter email address',
                           keyboardType: TextInputType.emailAddress,
                           action: TextInputAction.next,
-                          onSaved: (value) {},
                           validator: (v) {
                             if (v == null || !v.isValidEmail) {
                               return 'Please insert valid email';
@@ -60,11 +69,11 @@ class SignupPage extends StatelessWidget {
                         ),
                         const Spacing(size: 2),
                         TextInputForm(
+                          controller: _passwordTextController,
                           title: 'Password',
                           hintText: 'Enter password',
                           keyboardType: TextInputType.visiblePassword,
                           action: TextInputAction.done,
-                          onSaved: (value) {},
                           validator: (v) {
                             if (v!.length >= 6) {
                               return null;
@@ -80,16 +89,10 @@ class SignupPage extends StatelessWidget {
                     stream: loadingBloc.subjectIsLoading,
                     builder: (context, isLoading) {
                       return LoaderButton(
-                        label: 'Create Account',
-                        isLoading: isLoading.hasData &&
-                            isLoading.data!.contains(LoadingType.signup),
-                        onPressed: () {
-                          if (_form.currentState!.validate()) {
-                            _form.currentState!.save();
-                            //authBloc.register();
-                          }
-                        },
-                      );
+                          label: 'Create Account',
+                          isLoading: isLoading.hasData &&
+                              isLoading.data!.contains(LoadingType.signup),
+                          onPressed: _createAccount);
                     }),
                 const Spacing(size: 7),
                 Row(
@@ -121,5 +124,22 @@ class SignupPage extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  void _createAccount() async {
+    if (_formKey.currentState == null || !_formKey.currentState!.validate()) {
+      return;
+    }
+    _formKey.currentState!.save();
+
+    final session = await authBloc.register(
+      _emailTextController.value.text,
+      _passwordTextController.value.text,
+    );
+
+    if (session != null) {
+      locator<NavigationService>()
+          .navigateTo(FeedPage.routeName, replace: true);
+    }
   }
 }
