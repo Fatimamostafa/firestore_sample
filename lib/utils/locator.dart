@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:glint_test/utils/navigation_service.dart';
+import 'package:firestore_sample/utils/navigation_service.dart';
 
 GetIt locator = GetIt.instance;
 

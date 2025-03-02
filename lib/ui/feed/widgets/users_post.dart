@@ -1,23 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:glint_test/network/authentication/model/user.dart';
-import 'package:glint_test/network/loader/loading_bloc.dart';
-import 'package:glint_test/network/post/moodel/post.dart';
-import 'package:glint_test/network/post/service/posts_service.dart';
-import 'package:glint_test/ui/create_post/create_post_page.dart';
-import 'package:glint_test/utils/firebase.dart';
-import 'package:glint_test/utils/spacing.dart';
-import 'package:glint_test/values/colors.dart';
-import 'package:glint_test/widgets/card.dart';
-import 'package:glint_test/widgets/loader_button.dart';
-import 'package:glint_test/widgets/text.dart';
+import 'package:firestore_sample/network/authentication/model/user.dart';
+import 'package:firestore_sample/network/loader/loading_bloc.dart';
+import 'package:firestore_sample/network/post/moodel/post.dart';
+import 'package:firestore_sample/network/post/service/posts_service.dart';
+import 'package:firestore_sample/ui/create_post/create_post_page.dart';
+import 'package:firestore_sample/utils/firebase.dart';
+import 'package:firestore_sample/utils/spacing.dart';
+import 'package:firestore_sample/values/colors.dart';
+import 'package:firestore_sample/widgets/card.dart';
+import 'package:firestore_sample/widgets/loader_button.dart';
+import 'package:firestore_sample/widgets/text.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class UserPost extends StatelessWidget {
   final PostModel post;
 
-  UserPost({Key? key, required this.post}) : super(key: key);
+  UserPost({super.key, required this.post});
 
   final DateTime timestamp = DateTime.now();
 
@@ -41,7 +41,7 @@ class UserPost extends StatelessWidget {
                 children: [
                   TextX(
                     text: post.description,
-                    color: Theme.of(context).textTheme.caption!.color,
+                    color: Theme.of(context).textTheme.bodySmall!.color,
                     fontSize: 16.0,
                   ),
                   const Spacing(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:glint_test/utils/spacing.dart';
-import 'package:glint_test/values/colors.dart';
-import 'package:glint_test/values/constants.dart';
-import 'package:glint_test/widgets/text.dart';
+import 'package:firestore_sample/utils/spacing.dart';
+import 'package:firestore_sample/values/colors.dart';
+import 'package:firestore_sample/values/constants.dart';
+import 'package:firestore_sample/widgets/text.dart';
 
 import 'loading_indicator.dart';
 
@@ -29,7 +29,7 @@ class LoaderButton extends StatelessWidget {
   final double? fontSize;
 
   const LoaderButton(
-      {Key? key,
+      {super.key,
       required this.onPressed,
       required this.label,
       this.icon,
@@ -42,8 +42,7 @@ class LoaderButton extends StatelessWidget {
       this.textColor = Colors.black,
       this.isEnabled = true,
       this.decorationType = DecorationType.enable,
-      this.fontSize})
-      : super(key: key);
+      this.fontSize});
 
   getDecoration(bool isEnabled) {
     DecorationType type = isEnabled ? decorationType : DecorationType.disable;

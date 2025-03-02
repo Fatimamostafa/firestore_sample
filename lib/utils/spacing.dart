@@ -18,10 +18,10 @@ class Spacing extends StatelessWidget {
   final Axis direction;
 
   /// Creates a [Spacing] instance with sane defaults
-   const Spacing({Key? key,
+   const Spacing({super.key,
     this.size = 1.0,
     this.direction = Axis.vertical,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

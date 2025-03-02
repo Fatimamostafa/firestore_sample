@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class TextX extends StatelessWidget {
   const TextX(
-      {Key? key,
+      {super.key,
       this.color,
       this.text,
       this.fontSize,
@@ -15,8 +15,7 @@ class TextX extends StatelessWidget {
       this.letterSpacing,
       this.textAlign,
       this.textDecoration,
-      this.fontFamily})
-      : super(key: key);
+      this.fontFamily});
 
   final String? text;
   final Color? color;
@@ -34,7 +33,7 @@ class TextX extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "$text",
+      '$text',
       overflow: overflow,
       textAlign: textAlign,
       softWrap: softWrap,

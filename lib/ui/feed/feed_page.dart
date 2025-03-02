@@ -1,23 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:glint_test/network/authentication/service/auth_service.dart';
-import 'package:glint_test/network/post/moodel/post.dart';
-import 'package:glint_test/ui/feed/widgets/fab_container.dart';
-import 'package:glint_test/ui/feed/widgets/users_post.dart';
-import 'package:glint_test/utils/firebase.dart';
-import 'package:glint_test/utils/spacing.dart';
-import 'package:glint_test/values/colors.dart';
-import 'package:glint_test/widgets/loading_indicator.dart';
-import 'package:glint_test/widgets/text.dart';
+import 'package:firestore_sample/network/authentication/service/auth_service.dart';
+import 'package:firestore_sample/network/post/moodel/post.dart';
+import 'package:firestore_sample/ui/feed/widgets/fab_container.dart';
+import 'package:firestore_sample/ui/feed/widgets/users_post.dart';
+import 'package:firestore_sample/utils/firebase.dart';
+import 'package:firestore_sample/utils/spacing.dart';
+import 'package:firestore_sample/values/colors.dart';
+import 'package:firestore_sample/widgets/loading_indicator.dart';
+import 'package:firestore_sample/widgets/text.dart';
 
 class FeedPage extends StatelessWidget {
   static const routeName = '/feed';
 
-  const FeedPage({Key? key}) : super(key: key);
+  const FeedPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _queryStream =
+    final Stream<QuerySnapshot> queryStream =
         postRef.orderBy('timestamp', descending: true).snapshots();
 
     return Scaffold(
@@ -52,11 +52,11 @@ class FeedPage extends StatelessWidget {
           ),
         ),
         body: StreamBuilder<QuerySnapshot>(
-          stream: _queryStream,
+          stream: queryStream,
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
-              return const TextX(text: 'Something went wrong');
+              return TextX(text: 'Something went wrong ${snapshot.error}');
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: LoadingIndicator());

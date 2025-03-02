@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:glint_test/network/authentication/model/user.dart';
-import 'package:glint_test/network/loader/loading_bloc.dart';
-import 'package:glint_test/utils/firebase.dart';
+import 'package:firestore_sample/network/authentication/model/user.dart';
+import 'package:firestore_sample/network/loader/loading_bloc.dart';
+import 'package:firestore_sample/utils/firebase.dart';
 
 class PostsService {
   /// Uploads post to the post collection in Firestore
@@ -10,7 +10,10 @@ class PostsService {
 
     DocumentSnapshot doc =
         await usersRef.doc(firebaseAuth.currentUser!.uid).get();
+
+    print("ERROR: ${doc.exists}");
     UserModel user = UserModel.fromJson(doc.data() as Map<String, dynamic>);
+
     var ref = postRef.doc();
     try {
       ref.set({

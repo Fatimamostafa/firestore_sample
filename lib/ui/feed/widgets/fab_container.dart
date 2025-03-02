@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:glint_test/ui/create_post/create_post_page.dart';
+import 'package:firestore_sample/ui/create_post/create_post_page.dart';
 
 class FabContainer extends StatelessWidget {
   final Widget? page;
@@ -9,8 +9,7 @@ class FabContainer extends StatelessWidget {
   final bool mini;
 
   const FabContainer(
-      {Key? key, this.page, required this.icon, this.mini = false})
-      : super(key: key);
+      {super.key, this.page, required this.icon, this.mini = false});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +28,6 @@ class FabContainer extends StatelessWidget {
       closedBuilder: (BuildContext context, VoidCallback openContainer) {
         return FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColor,
-          child: Icon(
-            icon,
-            color: Colors.white,
-          ),
           onPressed: () {
             Navigator.of(context).push(
               CupertinoPageRoute(
@@ -41,6 +36,10 @@ class FabContainer extends StatelessWidget {
             );
           },
           mini: mini,
+          child: Icon(
+            icon,
+            color: Colors.white,
+          ),
         );
       },
     );

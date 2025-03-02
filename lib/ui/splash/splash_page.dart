@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:glint_test/ui/feed/feed_page.dart';
-import 'package:glint_test/ui/signup/signup_page.dart';
-import 'package:glint_test/utils/locator.dart';
-import 'package:glint_test/utils/navigation_service.dart';
-import 'package:glint_test/utils/spacing.dart';
-import 'package:glint_test/values/colors.dart';
-import 'package:glint_test/widgets/text.dart';
+import 'package:firestore_sample/ui/feed/feed_page.dart';
+import 'package:firestore_sample/ui/signup/signup_page.dart';
+import 'package:firestore_sample/utils/locator.dart';
+import 'package:firestore_sample/utils/navigation_service.dart';
+import 'package:firestore_sample/utils/spacing.dart';
+import 'package:firestore_sample/values/colors.dart';
+import 'package:firestore_sample/widgets/text.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key}) : super(key: key);
+  const SplashPage({super.key});
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -62,10 +62,10 @@ class _SplashPageState extends State<SplashPage> {
         body: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            Center(
+            const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   TextX(
                     text: 'Glints Test',
                     fontWeight: FontWeight.bold,

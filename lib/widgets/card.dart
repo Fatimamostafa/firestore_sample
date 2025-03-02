@@ -6,11 +6,11 @@ class CustomCard extends StatelessWidget {
   final bool elevated;
 
   const CustomCard({
-    Key? key,
+    super.key,
     required this.child,
     required this.borderRadius,
     this.elevated = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:glint_test/values/colors.dart';
+import 'package:firestore_sample/values/colors.dart';
 
 class PostInputField extends StatelessWidget {
   final TextEditingController controller;
@@ -9,13 +9,13 @@ class PostInputField extends StatelessWidget {
   final Function onSubmitted;
 
   const PostInputField({
-    Key? key,
+    super.key,
     required this.controller,
     required this.hintText,
     required this.length,
     required this.line,
     required this.onSubmitted,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

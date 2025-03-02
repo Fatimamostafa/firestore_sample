@@ -1,11 +1,11 @@
+import 'package:firestore_sample/ui/feed/feed_page.dart';
+import 'package:firestore_sample/ui/login/login_page.dart';
+import 'package:firestore_sample/ui/signup/signup_page.dart';
+import 'package:firestore_sample/ui/splash/splash_page.dart';
+import 'package:firestore_sample/utils/locator.dart' show locator, setupLocator;
+import 'package:firestore_sample/utils/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:glint_test/ui/feed/feed_page.dart';
-import 'package:glint_test/ui/login/login_page.dart';
-import 'package:glint_test/ui/signup/signup_page.dart';
-import 'package:glint_test/ui/splash/splash_page.dart';
-import 'package:glint_test/utils/locator.dart';
-import 'package:glint_test/utils/navigation_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -23,7 +23,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

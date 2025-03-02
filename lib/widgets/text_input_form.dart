@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:glint_test/utils/spacing.dart';
-import 'package:glint_test/values/colors.dart';
+import 'package:firestore_sample/utils/spacing.dart';
+import 'package:firestore_sample/values/colors.dart';
 import 'package:rxdart/rxdart.dart';
 
 class TextInputForm extends StatefulWidget {
@@ -26,7 +26,7 @@ class TextInputForm extends StatefulWidget {
   final int? maxLength;
 
   const TextInputForm(
-      {Key? key,
+      {super.key,
       this.autoFocus,
       this.keyboardType = TextInputType.text,
       this.errorText = false,
@@ -46,8 +46,7 @@ class TextInputForm extends StatefulWidget {
       this.borderNone = false,
       this.onTap,
       this.maxLine = 1,
-      this.maxLength})
-      : super(key: key);
+      this.maxLength});
 
   @override
   _TextInputFormState createState() {

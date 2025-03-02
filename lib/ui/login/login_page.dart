@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:glint_test/network/authentication/service/auth_service.dart';
-import 'package:glint_test/network/loader/loading_bloc.dart';
-import 'package:glint_test/ui/feed/feed_page.dart';
-import 'package:glint_test/utils/extension.dart';
-import 'package:glint_test/utils/locator.dart';
-import 'package:glint_test/utils/navigation_service.dart';
-import 'package:glint_test/values/colors.dart';
-import 'package:glint_test/widgets/loader_button.dart';
-import 'package:glint_test/widgets/text_input_form.dart';
+import 'package:firestore_sample/network/authentication/service/auth_service.dart';
+import 'package:firestore_sample/network/loader/loading_bloc.dart';
+import 'package:firestore_sample/ui/feed/feed_page.dart';
+import 'package:firestore_sample/utils/extension.dart';
+import 'package:firestore_sample/utils/locator.dart';
+import 'package:firestore_sample/utils/navigation_service.dart';
+import 'package:firestore_sample/values/colors.dart';
+import 'package:firestore_sample/widgets/loader_button.dart';
+import 'package:firestore_sample/widgets/text_input_form.dart';
 
 import '../../utils/spacing.dart';
 import '../../widgets/text.dart';
@@ -16,7 +16,7 @@ import '../../widgets/text.dart';
 class LoginPage extends StatefulWidget {
   static const routeName = '/login';
 
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();

@@ -1,18 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:glint_test/network/post/moodel/post.dart';
-import 'package:glint_test/network/post/service/posts_service.dart';
-import 'package:glint_test/network/loader/loading_bloc.dart';
-import 'package:glint_test/ui/create_post/widgets/post_input_field.dart';
-import 'package:glint_test/utils/spacing.dart';
-import 'package:glint_test/values/colors.dart';
-import 'package:glint_test/widgets/loader_button.dart';
-import 'package:glint_test/widgets/text.dart';
+import 'package:firestore_sample/network/post/moodel/post.dart';
+import 'package:firestore_sample/network/post/service/posts_service.dart';
+import 'package:firestore_sample/network/loader/loading_bloc.dart';
+import 'package:firestore_sample/ui/create_post/widgets/post_input_field.dart';
+import 'package:firestore_sample/utils/spacing.dart';
+import 'package:firestore_sample/values/colors.dart';
+import 'package:firestore_sample/widgets/loader_button.dart';
+import 'package:firestore_sample/widgets/text.dart';
 
 class CreatePostPage extends StatefulWidget {
   final PostModel? post;
 
-  const CreatePostPage({Key? key, this.post}) : super(key: key);
+  const CreatePostPage({super.key, this.post});
 
   @override
   _CreatePostPageState createState() => _CreatePostPageState();
@@ -24,9 +23,9 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return true;
+    return PopScope(
+      onPopInvokedWithResult: (_,__) async {
+        return;
       },
       child: Scaffold(
         backgroundColor: ColorsX.white,
@@ -34,7 +33,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
           elevation: 0,
           backgroundColor: Colors.white,
           leading: IconButton(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).colorScheme.secondary,
             icon: const Icon(Icons.clear),
             onPressed: () {
               Navigator.pop(context);
@@ -82,7 +81,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
           ],
         ),
       ),
-    );;
+    );
   }
 
   void _createPost() async {

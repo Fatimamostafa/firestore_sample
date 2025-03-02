@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:glint_test/network/loader/loading_bloc.dart';
-import 'package:glint_test/ui/signup/signup_page.dart';
-import 'package:glint_test/utils/firebase.dart';
-import 'package:glint_test/utils/locator.dart';
-import 'package:glint_test/utils/navigation_service.dart';
+import 'package:firestore_sample/network/loader/loading_bloc.dart';
+import 'package:firestore_sample/ui/signup/signup_page.dart';
+import 'package:firestore_sample/utils/firebase.dart';
+import 'package:firestore_sample/utils/locator.dart';
+import 'package:firestore_sample/utils/navigation_service.dart';
 
 class AuthService {
   /// Registers a new user in Firestore database
@@ -19,6 +19,7 @@ class AuthService {
       );
       final User? currentUser = FirebaseAuth.instance.currentUser;
 
+      print("test:: ${currentUser?.uid} -- ${userCredential.user?.uid}");
       if (userCredential.user?.uid == currentUser?.uid) {
         User? user = userCredential.user;
 
