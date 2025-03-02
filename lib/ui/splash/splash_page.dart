@@ -67,7 +67,7 @@ class _SplashPageState extends State<SplashPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextX(
-                    text: 'Glints Test',
+                    text: 'Flutter Test',
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
                   ),
